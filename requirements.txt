@@ -1,0 +1,17 @@
+# Core Data Science
+pandas
+numpy
+scikit-learn
+
+# MLOps & Tracking
+mlflow>=2.0.0
+
+# API & Serving
+fastapi
+uvicorn[standard]
+gunicorn
+python-dotenv
+
+# Testing & Linting
+pytest
+flake8
