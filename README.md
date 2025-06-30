@@ -23,14 +23,15 @@ The primary trade-off is between **Performance and Interpretability/Compliance**
 
  Feature  Simple Model (e.g., Logistic Regression)  Complex Model (e.g., Gradient Boosting)
 
-**Performance**  Generally lower predictive power. | Typically higher accuracy, ROC-AUC, etc. |
+**Performance**  Generally lower predictive power.  Typically higher accuracy, ROC-AUC, etc. 
  **Interpretability** 
   **High.** Coefficients are directly explainable. Easy to explain to regulators and business stakeholders why a decision was made.  
- **Low.** A "black box." Difficult to explain the contribution of individual features to a specific prediction. Requires techniques like SHAP for post-hoc explanation. |
+ **Low.** A "black box." Difficult to explain the contribution of individual features to a specific prediction. Requires techniques like SHAP for post-hoc explanation. 
 **Regulatory Risk** 
- **Low.** Meets the transparency and auditability requirements of frameworks like Basel II. |
-  **High.** Regulators may be skeptical of models they cannot easily understand, potentially delaying or denying approval. |
+ **Low.** Meets the transparency and auditability requirements of frameworks like Basel II. 
+  **High.** Regulators may be skeptical of models they cannot easily understand, potentially delaying or denying approval. 
 
-**Implementation** Simpler to implement, debug, and maintain. | More complex to tune and prone to overfitting if not handled carefully. |
+**Implementation** Simpler to implement, debug, and maintain. 
+ More complex to tune and prone to overfitting if not handled carefully. 
 
 **Conclusion:** For a regulated financial product, it's often prudent to start with a simpler, interpretable model. Its performance can serve as a benchmark. A complex model might be used in parallel or as a "challenger," but the simpler model often remains the primary one for regulatory reporting.
