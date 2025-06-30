@@ -73,3 +73,29 @@ The primary trade-off is between **Performance and Interpretability/Compliance**
 
 ### **Step 2: Download Data**
 Download the `data.csv` file  and place it in the `data/raw/` directory
+
+# project Structure
+credit-risk-model-week-5/
+├── .github/workflows/ci.yml # <-- Defines the automated CI pipeline for testing.
+│
+├── data/ # <-- All project data (ignored by Git).
+│ └── raw/ # - Raw, immutable data goes here (e.g., train.csv).
+│
+├── notebooks/
+│ └── 1.0-eda.ipynb # <-- (Task 2) Exploratory analysis, visualization, and hypothesis formation.
+│
+├── src/ # <-- All production source code for the application.
+│ ├── init.py # - Makes 'src' a Python package.
+│ ├── data_processing.py # - (Task 3 & 4) Holds functions for feature engineering and proxy target creation.
+│ ├── train.py # - (Task 5) The main script to run the model training pipeline.
+│ └── api/ # - (Task 6) Sub-package for the prediction API.
+│ ├── main.py # - The FastAPI application logic.
+│ └── pydantic_models.py # - Data validation models for the API.
+│
+├── tests/
+│ └── test_data_processing.py # <-- (Task 5) Unit tests to verify the data_processing logic.
+│
+├── README.md # <-- (Task 1) Project overview, setup guide, and business analysis (this file).
+├── requirements.txt # <-- Lists all Python dependencies for the project.
+├── Dockerfile # <-- Instructions to build a portable container for the API.
+└── docker-compose.yml # <-- A simple way to run the containerized API service locally.
