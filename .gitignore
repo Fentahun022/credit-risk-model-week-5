@@ -33,7 +33,6 @@ venv.bak/
 
 # Project-specific ignores
 /data/
-/notebooks/1.0-eda.ipynb
 mlruns/
 .mlflow-cache/
 .pytest_cache/

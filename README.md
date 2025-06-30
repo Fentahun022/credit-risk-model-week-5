@@ -35,3 +35,41 @@ The primary trade-off is between **Performance and Interpretability/Compliance**
  More complex to tune and prone to overfitting if not handled carefully. 
 
 **Conclusion:** For a regulated financial product, it's often prudent to start with a simpler, interpretable model. Its performance can serve as a benchmark. A complex model might be used in parallel or as a "challenger," but the simpler model often remains the primary one for regulatory reporting.
+
+
+
+
+
+**Key Features:**
+- **EDA:** Comprehensive analysis in `notebooks/1.0-eda.ipynb`.
+- **Modular Code:** Clean, reusable scripts in the `src/` directory..
+
+---
+
+## 🚀 How to Run This Project
+
+### **Prerequisites**
+-   Python 3.10+
+-   Docker and Docker Compose
+
+### **Step 1: Clone & Configure Environment**
+
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/Fentahun022/credit-risk-model-week-5.git
+    cd credit-risk-model-week-5
+    ```
+
+2.  **Create a virtual environment:**
+    ```bash
+    python3 -m venv .venv
+    source .venv/bin/activate
+    ```
+
+3.  **Install dependencies:**
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+### **Step 2: Download Data**
+Download the `data.csv` file  and place it in the `data/raw/` directory
