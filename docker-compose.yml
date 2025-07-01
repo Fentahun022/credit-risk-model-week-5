@@ -1,0 +1,22 @@
+# docker-compose.yml
+version: '3.8'
+
+services:
+  credit-risk-api:
+    build: .
+    container_name: credit-risk-api
+    ports:
+      - "8000:8000"
+    
+    user: "${UID}:${GID}"
+    
+    volumes:
+      - ./mlruns:/app/mlruns
+      - ./database:/app/database
+
+    environment:
+      # --- THIS IS THE CORRECTED LINE ---
+      # Use the absolute path inside the container, with 4 slashes
+      - MLFLOW_TRACKING_URI=sqlite:////app/database/mlflow.db
+      - MODEL_NAME=CreditRiskModel
+      - MODEL_STAGE=Production

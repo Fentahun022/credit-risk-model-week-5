@@ -36,3 +36,4 @@ venv.bak/
 mlruns/
 .mlflow-cache/
 .pytest_cache/
+/database/
