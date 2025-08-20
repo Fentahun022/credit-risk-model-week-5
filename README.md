@@ -37,6 +37,75 @@ The primary trade-off is between **Performance and Interpretability/Compliance**
 **Conclusion:** For a regulated financial product, it's often prudent to start with a simpler, interpretable model. Its performance can serve as a benchmark. A complex model might be used in parallel or as a "challenger," but the simpler model often remains the primary one for regulatory reporting.
 
 
+# 3. Train a Model
+# Terminal 1: Start MLflow Server
+# Create directories with open permissions
+mkdir -m 777 database mlruns
+mlflow ui --backend-store-uri sqlite:///database/mlflow.db --default-artifact-root ./mlruns
+
+# Terminal 2: Run Training
+
+# Make sure your virtual environment is active
+source .venv/bin/activate
+python -m src.model
+
+# 4. Run the Interactive Dashboard
+# Make sure your virtual environment is active
+source .venv/bin/activate
+streamlit run dashboard.py
+
+# 5. Run Tests
+# Make sure your virtual environment is active
+source .venv/bin/activate
+pytest
 
 
+---
+---
+
+## **Part 3: How to Run the Final Project (Standalone Guide)**
+
+This is a clean, user-focused guide.
+
+### **Step 1: Setup**
+1.  **Clone the repository:** `git clone https://github.com/Fentahun022/credit-risk-model-week-5.git` and `cd` into it.
+2.  **Create Environment:** `python3 -m venv .venv`
+3.  **Activate Environment:** `source .venv/bin/activate`
+4.  **Install Dependencies:** `pip install -r requirements.txt`
+5.  **Add Data:** Create a `data/raw` directory and place your `data.csv` file inside.
+
+### **Step 2: Train the Model**
+You need two terminals for this.
+1.  **In Terminal 1,** start the MLflow server. This manages your models.
+    ```bash
+    mkdir -m 777 database mlruns
+    mlflow ui --backend-store-uri sqlite:///database/mlflow.db --default-artifact-root ./mlruns
+    ```
+    Wait for it to say it's "Listening at http://127.0.0.1:5000".
+
+2.  **In Terminal 2,** activate your environment (`source .venv/bin/activate`) and run the training script.
+    ```bash
+    python -m src.model
+    ```
+    This will train the model and promote the best version to "Production".
+
+### **Step 3: Launch the Dashboard**
+This is the main tool you will use.
+1.  **In a new terminal,** activate your environment (`source .venv/bin/activate`).
+2.  Run the Streamlit application.
+    ```bash
+    streamlit run dashboard.py
+    ```
+3.  Your browser will open to `http://localhost:8501`. Use the sidebar to input customer data and see the real-time risk assessment.
+
+### **Step 4: Run Tests (Optional)**
+To verify all components are working correctly, run the automated test suite.
+1.  **In a new terminal,** activate your environment (`source .venv/bin/activate`).
+2.  Run pytest.
+    ```bash
+    pytest
+    ```
+
+---
+---
 

@@ -12,7 +12,6 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
-# The line st.set_option('deprecation.showPyplotGlobalUse', False) has been removed as it is obsolete in modern Streamlit versions.
 
 # --- Model Loading ---
 @st.cache_resource(show_spinner="Loading financial risk model...")
@@ -29,7 +28,6 @@ model = load_model()
 # --- Helper Function ---
 def probability_to_score(prob, min_score, max_score):
     """Maps a probability (0-1) to a standard credit score range (e.g., 300-850)."""
-    # Lower probability of being high-risk should result in a higher score.
     score = min_score + (1 - prob) * (max_score - min_score)
     return int(score)
 
@@ -48,28 +46,20 @@ with st.sidebar:
         std_value = st.number_input("Std. Dev. of Transaction Value", min_value=0, value=1500, help="The standard deviation of their transaction values.")
         unique_products = st.slider("Number of Unique Products", 1, 50, 3, help="How many different products have they purchased?")
         most_frequent_channel = st.selectbox("Most Frequent Channel", ["Channel_Id_1", "Channel_Id_2", "Channel_Id_3", "Channel_Id_4", "Channel_Id_5", "Channel_Id_6"], help="The customer's most used transaction channel.")
-        
         submit_button = st.form_submit_button(label="Assess Risk")
 
 # --- Main Panel: Display Results ---
 if model is not None and submit_button:
-    # Prepare data for model prediction in a DataFrame
     customer_data = pd.DataFrame([{"total_transactions": total_transactions, "total_value": total_value, "avg_value": avg_value, "std_value": std_value, "unique_products": unique_products, "most_frequent_channel": most_frequent_channel}])
     
     st.header("Risk Assessment Results")
-    col1, col2 = st.columns([1, 2]) # Make the explanation column wider
-
+    col1, col2 = st.columns([1, 2])
     with col1:
         st.subheader("Credit Score & Recommendation")
-        # Get prediction from the loaded model
         risk_proba = model.predict_proba(customer_data)[0, 1]
         credit_score = probability_to_score(risk_proba, config.MIN_SCORE, config.MAX_SCORE)
-
-        # Display key metrics
         st.metric("Credit Score", f"{credit_score}")
         st.metric("High-Risk Probability", f"{risk_proba:.2%}")
-
-        # Provide a clear, color-coded recommendation based on the score
         if credit_score < 580:
             st.error("#### Recommendation: **Decline**\nHigh risk detected based on behavioral patterns.")
         elif 580 <= credit_score < 670:
@@ -81,15 +71,12 @@ if model is not None and submit_button:
         st.subheader("Prediction Explanation (via SHAP)")
         with st.spinner("Generating explanation plot..."):
             explanation = explain_prediction(model, customer_data)
-            
-            # Create and display the SHAP waterfall plot
             fig, ax = plt.subplots()
             shap.plots.waterfall(explanation, max_display=10, show=False)
             plt.title("Feature Contribution to Risk Score", fontsize=14)
             st.pyplot(fig, bbox_inches='tight', use_container_width=True)
-            st.caption("This waterfall plot shows the features that pushed the risk prediction **higher (in red)** or **lower (in blue)**, starting from the baseline. The final prediction is the value at the top.")
-
+            st.caption("This plot shows features that pushed the risk prediction **higher (red)** or **lower (blue)** from the baseline.")
 elif model is None:
-    st.error("Model is not loaded. Cannot perform assessment. Please check the application logs or train a model.")
+    st.error("Model is not loaded. Please train a model first.")
 else:
     st.info("Please enter customer details in the sidebar and click 'Assess Risk' to generate their credit profile.")
